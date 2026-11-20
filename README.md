@@ -48,4 +48,58 @@ These formulas run client-side in the browser via the HTML5 Web Audio API:
 # Clone the repository
 git clone https://github.com/YOUR_USERNAME/web-audio-decibel-meter.git
 
+## Quick Usage Example
+
+```typescript
+import { 
+  aWeighting, 
+  cWeighting, 
+  addIncoherentDecibels, 
+  soundDistanceDrop 
+} from "./src/index";
+
+// 1. Calculate A-weighting curve adjustment at 100 Hz
+const weight100Hz = aWeighting(100); 
+console.log(weight100Hz); // ~ -19.1 dB (attenuated due to low human ear sensitivity)
+
+// 2. Add two independent sound sources (60 dB conversational chatter)
+const total = addIncoherentDecibels([60, 60]);
+console.log(total); // 63.01 dB (doubling power = +3 dB)
+
+// 3. Sound level of an 85 dB lawn mower at 10 meters when measured at 20 meters
+const levelAt20m = soundDistanceDrop(85, 10, 20);
+console.log(levelAt20m); // ~ 78.98 dB (~6 dB drop per distance doubling)
+    
+
+Acoustic Reference Benchmarks
+Sound Level (dBA)	        Everyday Sound Example	                   NIOSH / OSHA Exposure Standard
+30 dBA	                 Whisper, quiet bedroom at night	          WHO recommended bedroom limit
+50 dBA	                 Refrigerator hum, moderate rainfall	       Daytime residential guideline (EPA)
+60 dBA	                 Normal conversation at 1 meter              Completely safe for prolonged exposure
+70 dBA	                 Vacuum cleaner, busy office            	    Annoyance / concentration disruption
+85 dBA	                 Heavy traffic, lawn mower, noisy diner	    NIOSH 8-hour maximum safe limit
+100 dBA	                 Baby crying up close, motorcycle, subway	 Maximum 15 minutes recommended
+120 dBA	                 Police siren, rock concert front row	       Immediate hearing damage threshold
+140 dBA	                 Jet engine takeoff, gunshot	                Immediate physical pain threshold
+Interactive lookup available at soundleveltest.com/decibel-chart.
+
+
+Maintained by Nayeem — Software Developer & Acoustics Researcher.
+
+Web: soundleveltest.com/author/nayeem
+X / Twitter: @NayeemKar63
+
+Citation
+@software{nayeem_web_audio_acoustics,
+  author = {Nayeem},
+  title = {Web Audio Decibel & Acoustics Toolkit},
+  url = {https://soundleveltest.com},
+  year = {2026}
+}
+
+
+
+
+
+
 
